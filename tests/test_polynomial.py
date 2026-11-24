@@ -1,4 +1,4 @@
-from src.polynomial import add_polynomials
+from src.polynomial import add_polynomials, multiply_polynomials
 
 
 def test_add_polynomials():
@@ -28,3 +28,33 @@ def test_different_polynomial_lengths():
         assert False
     except ValueError:
         assert True
+        
+
+from src.polynomial import multiply_polynomials
+
+
+def test_multiply_polynomials():
+    poly_a = [1, 2]
+    poly_b = [3, 4]
+
+    result = multiply_polynomials(poly_a, poly_b)
+
+    assert result == [3, 10, 8]
+
+
+def test_multiply_polynomials_modulo():
+    poly_a = [3328, 2]
+    poly_b = [2, 3]
+
+    result = multiply_polynomials(poly_a, poly_b)
+
+    assert result == [3327, 1, 6]
+
+
+def test_multiply_empty_polynomial():
+    poly_a = []
+    poly_b = [1, 2]
+
+    result = multiply_polynomials(poly_a, poly_b)
+
+    assert result == []
