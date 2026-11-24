@@ -1,4 +1,4 @@
-from src.polynomial import add_polynomials, multiply_polynomials
+from src.polynomial import add_polynomials, multiply_polynomials, reduce_polynomial, multiply_polynomials_in_ring
 
 
 def test_add_polynomials():
@@ -58,3 +58,51 @@ def test_multiply_empty_polynomial():
     result = multiply_polynomials(poly_a, poly_b)
 
     assert result == []
+    
+
+from src.polynomial import reduce_polynomial
+
+
+def test_reduce_polynomial():
+    poly = [1, 2, 3, 4]
+
+    result = reduce_polynomial(poly, degree=2)
+
+    assert result == [3327, 3327]
+
+
+def test_reduce_polynomial_high_degree():
+    poly = [1] + [0] * 255 + [5]
+
+    result = reduce_polynomial(poly)
+
+    assert result[0] == 3325
+    assert len(result) == 256
+
+
+def test_reduce_polynomial_empty():
+    result = reduce_polynomial([])
+
+    assert len(result) == 256
+    assert all(value == 0 for value in result)
+
+
+def test_multiply_polynomials_in_ring():
+    poly_a = [1, 2]
+    poly_b = [3, 4]
+
+    result = multiply_polynomials_in_ring(poly_a, poly_b, degree=2)
+
+    assert result == [3324, 10]
+
+
+def test_multiply_polynomials_in_ring_default_degree():
+    poly_a = [1, 2]
+    poly_b = [3, 4]
+
+    result = multiply_polynomials_in_ring(poly_a, poly_b)
+
+    assert len(result) == 256
+    assert result[0] == 3
+    assert result[1] == 10
+    assert result[2] == 8
