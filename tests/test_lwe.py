@@ -1,4 +1,4 @@
-from src.lwe import matrix_vector_multiply, add_error_vector
+from src.lwe import matrix_vector_multiply, add_error_vector, calculate_lwe
 
 
 def test_matrix_vector_multiply():
@@ -57,3 +57,46 @@ def test_add_error_vector_different_lengths():
         assert False
     except ValueError:
         assert True
+        
+
+
+def test_calculate_lwe():
+    matrix = [
+        [1, 2],
+        [3, 4]
+    ]
+
+    secret = [2, 3]
+    error = [1, -2]
+
+    result = calculate_lwe(matrix, secret, error)
+
+    assert result == [9, 16]
+
+
+def test_calculate_lwe_modulo():
+    matrix = [
+        [3328, 2]
+    ]
+
+    secret = [2, 3]
+    error = [2]
+
+    result = calculate_lwe(matrix, secret, error)
+
+    assert result == [6]
+    
+def test_professor_example():
+    matrix = [
+        [0, 0, 2418, 23],
+        [12, 241, 2415, 23],
+        [19, 483, 2413, 23],
+        [27, 724, 2410, 22]
+    ]
+
+    secret = [0, 1, 1, 1]
+    error = [-2, 0, 1, 0]
+
+    result = calculate_lwe(matrix, secret, error)
+
+    assert result == [2439, 2679, 2920, 3156]

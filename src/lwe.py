@@ -39,3 +39,18 @@ def add_error_vector(result, error, modulus=3329):
         final_result.append(value)
 
     return final_result
+
+
+def calculate_lwe(matrix, secret, error, modulus=3329):
+    """
+    Calculate the basic LWE equation:
+    b = A*s + e (mod q).
+    """
+
+    # Calculate A multiplied by the secret vector.
+    result = matrix_vector_multiply(matrix, secret, modulus)
+
+    # Add the error vector.
+    final_result = add_error_vector(result, error, modulus)
+
+    return final_result
