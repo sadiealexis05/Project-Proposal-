@@ -2,10 +2,8 @@ from src.polynomial import add_polynomials, multiply_polynomials_in_ring
 
 
 def matrix_vector_multiply(matrix, vector, modulus=3329):
-    """
-    Multiply a matrix by a vector.
-    Apply the modulus to each result.
-    """
+    # Multiply a matrix by a vector.
+    # Apply the modulus to each result.
 
     result = []
 
@@ -25,10 +23,8 @@ def matrix_vector_multiply(matrix, vector, modulus=3329):
 
 
 def add_error_vector(result, error, modulus=3329):
-    """
-    Add an error vector to a result vector.
-    Apply the modulus to each value.
-    """
+    # Add an error vector to a result vector.
+    # Apply the modulus to each value.
 
     # Both vectors must have the same length.
     if len(result) != len(error):
@@ -45,10 +41,9 @@ def add_error_vector(result, error, modulus=3329):
 
 
 def calculate_lwe(matrix, secret, error, modulus=3329):
-    """
-    Calculate the basic LWE equation:
-    b = A*s + e (mod q).
-    """
+    # Calculate the basic LWE equation:
+    # b = A*s + e (mod q).
+    
 
     # Calculate A multiplied by the secret vector.
     result = matrix_vector_multiply(matrix, secret, modulus)
@@ -60,10 +55,8 @@ def calculate_lwe(matrix, secret, error, modulus=3329):
 
 
 def module_matrix_vector_multiply(matrix, vector, modulus=3329, degree=256):
-    """
-    Multiply a matrix of polynomials by a vector of polynomials.
-    All polynomial operations happen inside the polynomial ring.
-    """
+    # Multiply a matrix of polynomials by a vector of polynomials.
+    # All polynomial operations happen inside the polynomial ring.
 
     result = []
 
@@ -104,10 +97,8 @@ def module_matrix_vector_multiply(matrix, vector, modulus=3329, degree=256):
 
 
 def add_polynomial_error_vector(result, error, modulus=3329):
-    """
-    Add two vectors containing polynomials.
-    Apply the modulus to each coefficient.
-    """
+    # Add two vectors containing polynomials.
+    # Apply the modulus to each coefficient.
 
     # Both vectors must have the same length.
     if len(result) != len(error):
@@ -131,13 +122,11 @@ def add_polynomial_error_vector(result, error, modulus=3329):
     return final_result
 
 def calculate_module_lwe(matrix, secret, error, modulus=3329, degree=256):
-    """
-    Calculate Module-LWE:
-    b = A*s + e (mod q).
+    # Calculate Module-LWE:
+    # b = A*s + e (mod q).
 
-    Matrix multiplication and addition happen
-    inside the polynomial ring.
-    """
+    # Matrix multiplication and addition happen
+    # inside the polynomial ring.
 
     # Multiply the polynomial matrix by the secret vector.
     result = module_matrix_vector_multiply(

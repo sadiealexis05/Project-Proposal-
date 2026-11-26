@@ -1,8 +1,6 @@
 def add_polynomials(poly_a, poly_b, modulus=3329):
-    """
-    Add two polynomials coefficient by coefficient.
-    Return the result modulo q.
-    """
+    # Add two polynomials coefficient by coefficient.
+    # Return the result modulo q.
 
     # Polynomials must have the same number of coefficients.
     if len(poly_a) != len(poly_b):
@@ -18,10 +16,8 @@ def add_polynomials(poly_a, poly_b, modulus=3329):
 
 
 def multiply_polynomials(poly_a, poly_b, modulus=3329):
-    """
-    Multiply two polynomials.
-    Return the coefficients modulo q.
-    """
+    # Multiply two polynomials.
+    # Return the coefficients modulo q.
 
     # Handle empty polynomials.
     if len(poly_a) == 0 or len(poly_b) == 0:
@@ -42,10 +38,8 @@ def multiply_polynomials(poly_a, poly_b, modulus=3329):
     return result
 
 def reduce_polynomial(poly, modulus=3329, degree=256):
-    """
-    Reduce a polynomial modulo x^degree + 1.
-    Also reduce coefficients modulo q.
-    """
+    # Reduce a polynomial modulo x^degree + 1.
+    # Also reduce coefficients modulo q.
 
     # Create a list with exactly 'degree' coefficients.
     result = [0] * degree
@@ -70,10 +64,8 @@ def reduce_polynomial(poly, modulus=3329, degree=256):
 
 
 def multiply_polynomials_in_ring(poly_a, poly_b, modulus=3329, degree=256):
-    """
-    Multiply two polynomials inside the ring:
-    Z_q[x] / (x^degree + 1).
-    """
+    # Multiply two polynomials inside the ring:
+    # Z_q[x] / (x^degree + 1).
 
     # First, multiply the polynomials normally.
     product = multiply_polynomials(poly_a, poly_b, modulus)
