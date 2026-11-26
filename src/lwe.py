@@ -67,12 +67,23 @@ def module_matrix_vector_multiply(matrix, vector, modulus=3329, degree=256):
 
     result = []
 
-    # Go through each row of the matrix.
+    # Check matrix dimensions and polynomial sizes.
     for row in matrix:
 
-        # Check that the row and vector have matching lengths.
         if len(row) != len(vector):
             raise ValueError("Matrix and vector dimensions do not match.")
+
+        for polynomial in row:
+            if len(polynomial) > degree:
+                raise ValueError("Polynomial exceeds the allowed degree.")
+
+    # Check secret polynomial sizes.
+    for polynomial in vector:
+        if len(polynomial) > degree:
+            raise ValueError("Polynomial exceeds the allowed degree.")
+
+    # Multiply each row by the polynomial vector.
+    for row in matrix:
 
         # Start with a zero polynomial.
         total = [0] * degree
@@ -107,6 +118,10 @@ def add_polynomial_error_vector(result, error, modulus=3329):
     # Add corresponding polynomials.
     for i in range(len(result)):
 
+        # Polynomials must have matching lengths.
+        if len(result[i]) != len(error[i]):
+            raise ValueError("Polynomials must have the same length.")
+
         polynomial_sum = add_polynomials(
             result[i], error[i], modulus
         )
@@ -114,7 +129,6 @@ def add_polynomial_error_vector(result, error, modulus=3329):
         final_result.append(polynomial_sum)
 
     return final_result
-
 
 def calculate_module_lwe(matrix, secret, error, modulus=3329, degree=256):
     """

@@ -193,3 +193,58 @@ def test_calculate_module_lwe():
         [3, 4],
         [1, 3]
     ]
+    
+    
+def test_module_matrix_vector_multiply_invalid_dimensions():
+    matrix = [
+        [[1, 1], [2]],
+        [[0, 1]]
+    ]
+
+    vector = [
+        [1, 1],
+        [2, 1]
+    ]
+
+    try:
+        module_matrix_vector_multiply(matrix, vector, degree=2)
+        assert False
+    except ValueError:
+        assert True
+        
+    
+    
+def test_module_matrix_vector_multiply_polynomial_too_large():
+    matrix = [
+        [[1, 2, 3]]
+    ]
+
+    vector = [
+        [1, 2]
+    ]
+
+    try:
+        module_matrix_vector_multiply(
+            matrix, vector, degree=2
+        )
+        assert False
+    except ValueError:
+        assert True
+        
+        
+def test_add_polynomial_error_vector_different_polynomial_lengths():
+    result = [
+        [1, 2],
+        [3, 4]
+    ]
+
+    error = [
+        [1],
+        [2, 3]
+    ]
+
+    try:
+        add_polynomial_error_vector(result, error)
+        assert False
+    except ValueError:
+        assert True
