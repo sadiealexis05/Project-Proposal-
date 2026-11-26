@@ -1,3 +1,6 @@
+from src.polynomial import add_polynomials, multiply_polynomials_in_ring
+
+
 def matrix_vector_multiply(matrix, vector, modulus=3329):
     """
     Multiply a matrix by a vector.
@@ -54,3 +57,36 @@ def calculate_lwe(matrix, secret, error, modulus=3329):
     final_result = add_error_vector(result, error, modulus)
 
     return final_result
+
+
+def module_matrix_vector_multiply(matrix, vector, modulus=3329, degree=256):
+    """
+    Multiply a matrix of polynomials by a vector of polynomials.
+    All polynomial operations happen inside the polynomial ring.
+    """
+
+    result = []
+
+    # Go through each row of the matrix.
+    for row in matrix:
+
+        # Check that the row and vector have matching lengths.
+        if len(row) != len(vector):
+            raise ValueError("Matrix and vector dimensions do not match.")
+
+        # Start with a zero polynomial.
+        total = [0] * degree
+
+        # Multiply corresponding polynomials.
+        for i in range(len(vector)):
+
+            product = multiply_polynomials_in_ring(
+                row[i], vector[i], modulus, degree
+            )
+
+            # Add the product to the running total.
+            total = add_polynomials(total, product, modulus)
+
+        result.append(total)
+
+    return result

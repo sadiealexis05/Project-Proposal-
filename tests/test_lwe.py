@@ -1,4 +1,4 @@
-from src.lwe import matrix_vector_multiply, add_error_vector, calculate_lwe
+from src.lwe import matrix_vector_multiply, add_error_vector, calculate_lwe, module_matrix_vector_multiply
 
 
 def test_matrix_vector_multiply():
@@ -100,3 +100,24 @@ def test_professor_example():
     result = calculate_lwe(matrix, secret, error)
 
     assert result == [2439, 2679, 2920, 3156]
+    
+    
+def test_module_matrix_vector_multiply():
+    matrix = [
+        [[1, 1], [2]],
+        [[0, 1], [1, 1]]
+    ]
+
+    vector = [
+        [1, 1],
+        [2, 1]
+    ]
+
+    result = module_matrix_vector_multiply(
+        matrix, vector, degree=2
+    )
+
+    assert result == [
+        [4, 4],
+        [0, 4]
+    ]
