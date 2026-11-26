@@ -1,4 +1,4 @@
-from src.lwe import matrix_vector_multiply, add_error_vector, calculate_lwe, module_matrix_vector_multiply
+from src.lwe import matrix_vector_multiply, add_error_vector, calculate_lwe, module_matrix_vector_multiply, add_polynomial_error_vector, calculate_module_lwe
 
 
 def test_matrix_vector_multiply():
@@ -120,4 +120,76 @@ def test_module_matrix_vector_multiply():
     assert result == [
         [4, 4],
         [0, 4]
+    ]
+    
+    
+def test_add_polynomial_error_vector():
+    result = [
+        [1, 2],
+        [3, 4]
+    ]
+
+    error = [
+        [2, 1],
+        [1, 2]
+    ]
+
+    final_result = add_polynomial_error_vector(result, error)
+
+    assert final_result == [
+        [3, 3],
+        [4, 6]
+    ]
+
+
+def test_add_polynomial_error_vector_modulo():
+    result = [
+        [3328, 10]
+    ]
+
+    error = [
+        [2, -3]
+    ]
+
+    final_result = add_polynomial_error_vector(result, error)
+
+    assert final_result == [
+        [1, 7]
+    ]
+
+
+def test_add_polynomial_error_vector_different_lengths():
+    result = [[1, 2], [3, 4]]
+    error = [[1, 2]]
+
+    try:
+        add_polynomial_error_vector(result, error)
+        assert False
+    except ValueError:
+        assert True
+        
+        
+def test_calculate_module_lwe():
+    matrix = [
+        [[1, 1], [2]],
+        [[0, 1], [1, 1]]
+    ]
+
+    secret = [
+        [1, 1],
+        [2, 1]
+    ]
+
+    error = [
+        [-1, 0],
+        [1, -1]
+    ]
+
+    result = calculate_module_lwe(
+        matrix, secret, error, degree=2
+    )
+
+    assert result == [
+        [3, 4],
+        [1, 3]
     ]

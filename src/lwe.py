@@ -90,3 +90,49 @@ def module_matrix_vector_multiply(matrix, vector, modulus=3329, degree=256):
         result.append(total)
 
     return result
+
+
+def add_polynomial_error_vector(result, error, modulus=3329):
+    """
+    Add two vectors containing polynomials.
+    Apply the modulus to each coefficient.
+    """
+
+    # Both vectors must have the same length.
+    if len(result) != len(error):
+        raise ValueError("Vectors must have the same length.")
+
+    final_result = []
+
+    # Add corresponding polynomials.
+    for i in range(len(result)):
+
+        polynomial_sum = add_polynomials(
+            result[i], error[i], modulus
+        )
+
+        final_result.append(polynomial_sum)
+
+    return final_result
+
+
+def calculate_module_lwe(matrix, secret, error, modulus=3329, degree=256):
+    """
+    Calculate Module-LWE:
+    b = A*s + e (mod q).
+
+    Matrix multiplication and addition happen
+    inside the polynomial ring.
+    """
+
+    # Multiply the polynomial matrix by the secret vector.
+    result = module_matrix_vector_multiply(
+        matrix, secret, modulus, degree
+    )
+
+    # Add the polynomial error vector.
+    final_result = add_polynomial_error_vector(
+        result, error, modulus
+    )
+
+    return final_result
